@@ -1,0 +1,15 @@
+# Dataset folder 
+olist_dataset/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Python Cache & Env Files
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# System Files
+.DS_Store
+Thumbs.db
