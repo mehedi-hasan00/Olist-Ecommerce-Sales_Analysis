@@ -32,7 +32,7 @@ Raw CSVs → Clean & Merge Datasets (Pandas) → Statistical Analysis (SciPy)
 1. **`Olist_data_cleaning.ipynb`** — Cleans and merges all 7 raw datasets (orders, products, customers, order items, payments, reviews, sellers): fixes data types (string → datetime), translates product categories from Portuguese to English, validates dates, fixes zip codes, checks price/logic consistency, and exports clean CSVs.
 2. **`olist_statistical_analysis.ipynb`** — Runs formal hypothesis tests on the cleaned data (Chi-Square, ANOVA, T-Test, correlation analysis) to validate business patterns before deeper SQL exploration.
 3. **`python_to_sql_connection.ipynb`** — Loads the cleaned datasets into a MySQL database (`olist_db`) via SQLAlchemy, enabling SQL analysis in MySQL Workbench.
-4. **`olist_data_analysis.sql`** — Core business analysis run in MySQL Workbench, organized into 6 sections with 34 queries total:
+4. **`olist_data_analysis.sql`** — Core business analysis run in MySQL Workbench, organized into 6 sections with 33 queries total:
    - **Revenue & Sales Trends** — Monthly revenue, AOV, revenue by category, MoM growth
    - **Customer Analysis** — RFM (Recency, Frequency, Monetary), RFM segmentation, new vs. repeat customers, top spenders
    - **Seller Analysis** — Top sellers by revenue, seller review performance, delivery performance, Pareto (80/20) revenue concentration
@@ -73,7 +73,7 @@ Raw CSVs → Clean & Merge Datasets (Pandas) → Statistical Analysis (SciPy)
 ├── python_to_sql_connection.ipynb     # Load clean data into MySQL
 ├── olist_data_analysis_visual.ipynb   # Pull SQL results back & visualize
 ├── sql_file/
-│   └── olist_data_analysis.sql        # 29 business analysis SQL queries
+│   └── olist_data_analysis.sql        # 33 business analysis SQL queries
 └── README.md
 ```
 
