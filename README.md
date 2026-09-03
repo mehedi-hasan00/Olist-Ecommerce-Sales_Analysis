@@ -32,7 +32,7 @@ Raw CSVs → Clean & Merge Datasets (Pandas) → Statistical Analysis (SciPy)
 1. **`Olist_data_cleaning.ipynb`** — Cleans and merges all 7 raw datasets (orders, products, customers, order items, payments, reviews, sellers): fixes data types (string → datetime), translates product categories from Portuguese to English, validates dates, fixes zip codes, checks price/logic consistency, and exports clean CSVs.
 2. **`olist_statistical_analysis.ipynb`** — Runs formal hypothesis tests on the cleaned data (Chi-Square, ANOVA, T-Test, correlation analysis) to validate business patterns before deeper SQL exploration.
 3. **`python_to_sql_connection.ipynb`** — Loads the cleaned datasets into a MySQL database (`olist_db`) via SQLAlchemy, enabling SQL analysis in MySQL Workbench.
-4. **`olist_data_analysis.sql`** — Core business analysis run in MySQL Workbench, organized into 6 sections with 29 queries total:
+4. **`olist_data_analysis.sql`** — Core business analysis run in MySQL Workbench, organized into 6 sections with 34 queries total:
    - **Revenue & Sales Trends** — Monthly revenue, AOV, revenue by category, MoM growth
    - **Customer Analysis** — RFM (Recency, Frequency, Monetary), RFM segmentation, new vs. repeat customers, top spenders
    - **Seller Analysis** — Top sellers by revenue, seller review performance, delivery performance, Pareto (80/20) revenue concentration
@@ -89,7 +89,7 @@ Raw CSVs → Clean & Merge Datasets (Pandas) → Statistical Analysis (SciPy)
 ## 👤 Author
 
 **Mehedi Hasan**
-Data Analyst | [Portfolio](https://mehedi-hasan00.github.io)
+
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/mehedi-hasan-094855388/)
 [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/mehedi-hasan00)
