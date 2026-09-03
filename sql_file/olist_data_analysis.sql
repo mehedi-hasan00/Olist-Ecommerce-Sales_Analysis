@@ -15,6 +15,8 @@ where o.order_status = 'delivered'
 group by month
 order by month;
 
+
+
 -- 2. Averagr Order Value(AOV)
 select
 	round(sum(p.payment_value)/ count(distinct o.order_id),2) as avg_order_value
@@ -22,6 +24,8 @@ from orders o
 join payments p on o.order_id = p.order_id
 where o.order_status = 'delivered'
 and p.payment_value is not null;
+
+
 
 -- 3. Revenue by Category 
 select
@@ -65,7 +69,7 @@ order by month;
 =============================================================================================
 =================================Customer ANalysis===========================================
 */
--- 1. Recency, Frequency, Monetary(RFM)
+-- 5. Recency, Frequency, Monetary(RFM)
 select
 c.customer_unique_id,
 datediff(
@@ -83,7 +87,9 @@ and p.payment_value is not null
 group by c.customer_unique_id
 order by frequency desc;
 
--- 2. New vs Repeat Customers
+
+
+-- 6. New vs Repeat Customers
 select 
 	case 
 		when order_count = 1 then 'New Customer'
@@ -102,7 +108,7 @@ select
 group by customer_type;
 
 
--- 3. RFM Segmentation
+-- 7. RFM Segmentation
 with rfm_base as (
 select
 	c.customer_unique_id,
@@ -131,9 +137,11 @@ select customer_unique_id,
             else 'Churned'
             end as customer_segment
 	from rfm_base
-    order by monetary desc;  
+    order by monetary desc;
     
--- 4. Top Customers by Spend
+    
+    
+-- 8. Top Customers by Spend
 select 
 c.customer_unique_id,
 round(sum(p.payment_value),2) as total_spend,
@@ -152,7 +160,7 @@ limit 10;
 ========================================Seller Analysis========================================================
 */
 
--- 1. Top Sellers by Revenue and Order Count
+-- 9. Top Sellers by Revenue and Order Count
 select 
 	oi.seller_id,
     round(sum(oi.price),2) as total_revenue,
@@ -166,7 +174,9 @@ group by oi.seller_id
 order by 2 desc
 limit 10;
 
--- 2. Sellers Performance - Avg Review Score per Seller
+
+
+-- 10. Sellers Performance - Avg Review Score per Seller
 select
 	oi.seller_id,
     round(avg(r.review_score),2) as avg_review_score,
@@ -179,6 +189,8 @@ and r.review_score is not null
 group by oi.seller_id
 having count(distinct r.review_id) >= 50
 order by avg_review_score desc;
+
+
 
 -- getting highet total review
 select
@@ -194,7 +206,8 @@ group by oi.seller_id
 order by total_review desc;
 
 
--- 3. Seller Delivery Performance
+
+-- 11. Seller Delivery Performance
 select 
 		oi.seller_id,
         round(avg(datediff(o.order_delivered_customer_date, o.order_estimated_delivery_date)),2) as avg_delay_days,
@@ -209,7 +222,8 @@ having count(distinct o.order_id) >=5
 order by avg_delay_days desc;
 
 
--- 4. Number of Products per Seller
+
+-- 12. Number of Products per Seller
 select 
 oi.seller_id,
 count(distinct oi.order_id) as total_unique_order,
@@ -220,7 +234,9 @@ where o.order_status = 'delivered'
 group by oi.seller_id
 order by 2 desc;
 
--- 5. Revenue Concentration (Pareto/80-20 Analysis)
+
+
+-- 13. Revenue Concentration (Pareto/80-20 Analysis)
 
 with seller_revenue as (
 select 
@@ -256,7 +272,7 @@ select
 ==============================================================================================================
 =======================================Order & Delivery Performance===========================================
 */
--- 1. Order Status Breakdown
+-- 14. Order Status Breakdown
 
 select 
 	order_status,
@@ -265,8 +281,10 @@ select
     from orders
     group by order_status
     order by order_count desc;
+    
+    
 
--- 2. Average Delivery Time(purchase to delivery)
+-- 15. Average Delivery Time(purchase to delivery)
 select 
 	round( avg(datediff(order_delivered_customer_date, order_purchase_timestamp)),2) as avg_delivery_days
 from orders
@@ -276,7 +294,7 @@ and order_purchase_timestamp  is not null;
 
 
 
--- 3. Late Delivery % (actual vs estimated)
+-- 16. Late Delivery % (actual vs estimated)
 select 
 	sum(case 
 			when order_delivered_customer_date > order_estimated_delivery_date then 1 else 0 end) as late_orders,
@@ -288,7 +306,9 @@ where order_status = 'delivered'
 and order_delivered_customer_date is not null
 and order_estimated_delivery_date is not null;
 
--- 4. Delivery Time vs Review Score Correlation
+
+
+-- 17. Delivery Time vs Review Score Correlation
 select
 	case
 		when datediff(o.order_delivered_customer_date, o.order_estimated_delivery_date) > 0 then 'Late'
@@ -309,7 +329,7 @@ order by avg_review_score desc;
 
 
 
--- 5. Delivery time Distribution by category
+-- 18. Delivery time Distribution by category
 select
 	pr.product_category_name,
     round(avg(datediff(o.order_delivered_customer_date, o.order_purchase_timestamp)),2) as avg_delivery_days
@@ -327,7 +347,7 @@ order by avg_delivery_days desc;
 ======================================================================================================================
 =================================================Payment Analysis=====================================================
 */
--- 1. Pyment Type Distribution
+-- 19. Pyment Type Distribution
 select
 	payment_type,
     count(*) as transaction_count,
@@ -336,8 +356,10 @@ select
 from payments
 group by payment_type
 order by transaction_count desc;
+
+
     
--- 2. Installment Analysis
+-- 20. Installment Analysis
 select 
 	case
 		when payment_installments = 1 then 'Single Payment'
@@ -348,7 +370,10 @@ select
 from payments
 group by installment_type;
 
--- 3. Average Installments by Payment Type
+
+
+
+-- 21. Average Installments by Payment Type
 select
 	payment_type,
     round(avg(payment_installments),2) as avg_installments,
@@ -358,7 +383,9 @@ where payment_type != 'not_defined'
 group by payment_type
 order by avg_installments desc;
 
--- 4. Payment Value Distribution(intallment count and avg order value)
+
+
+-- 22. Payment Value Distribution(intallment count and avg order value)
 select
 	payment_installments,
     count(*) as order_count,
@@ -368,7 +395,9 @@ where payment_installments>0
 group by payment_installments
 order by payment_installments;
 
--- 5. Payment Type vd Order Value Cross-check
+
+
+-- 23. Payment Type vd Order Value Cross-check
 select
 payment_type,
 round(avg(payment_value),2) as avg_payment_value,
@@ -379,11 +408,12 @@ where payment_type != 'not_defined'
 group by payment_type
 order by avg_payment_value desc;
 
+
 /*
 ==============================================================================================================
 ============================================Product Analysis==================================================
 */
--- 1. Best-Selling Categories(by quantity and revenue)
+-- 24. Best-Selling Categories(by quantity and revenue)
  select
 	pr.product_category_name,
     count(oi.order_item_id) as total_qty_sold,
@@ -397,7 +427,9 @@ group by pr.product_category_name
 order by total_qty_sold desc
 limit 10;
 
--- 2. Average Price per Category
+
+
+-- 25. Average Price per Category
 select
 pr.product_category_name,
 round(avg(oi.price),2) as avg_price,
@@ -409,9 +441,11 @@ join orders o on oi.order_id = o.order_id
 where o.order_status = 'delivered'
 	and pr.product_category_name is not null
 group by pr.product_category_name
-order by avg_price desc
+order by avg_price desc;
 
--- 3. Category-wise Seller count
+
+
+-- 26. Category-wise Seller count
 
 select pr.product_category_name,
 count(distinct oi.seller_id) as total_sellers,
@@ -422,9 +456,10 @@ join orders o on oi.order_id = o.order_id
 where o.order_status = 'delivered'
 	and pr.product_category_name is not null
 group by pr.product_category_name
-order by total_sellers desc
+order by total_sellers desc;
 
--- 4.Freight (shipping) cost vs Product price by category
+
+-- 27.Freight (shipping) cost vs Product price by category
 select
 	pr.product_category_name,
     round(avg(oi.price),2) as avg_price,
@@ -437,10 +472,10 @@ where o.order_status = 'delivered'
 	and pr.product_category_name is not null
     and oi.price > 0
 group by pr.product_category_name
-order by freight_pct_of_price desc
+order by freight_pct_of_price desc;
 
 
--- 5. Top Revenue-Generation Products(individual product level)
+-- 28. Top Revenue-Generation Products(individual product level)
 select
 	oi.product_id,
     pr.product_category_name,
@@ -452,13 +487,13 @@ join orders o on oi.order_id = o.order_id
 where o.order_status = 'delivered'
 group by oi.product_id, pr.product_category_name
 order by total_revenue desc
-limit 10
+limit 10;
 
 /* 
 ================================================================================================================
 =========================================Review/Satisfaction Analysis===========================================
 */
--- 1. Average Review Score by Category
+-- 29. Average Review Score by Category
 select
 	pr.product_category_name,
     round(avg(r.review_score),2) as avg_review_score,
@@ -475,7 +510,7 @@ having count(r.review_id) >= 30
 order by avg_review_score desc;
 
 
--- 2. Review Score Distribution (1-5 star breakdown)
+-- 30. Review Score Distribution (1-5 star breakdown)
  
 select 
 	review_score,
@@ -484,9 +519,9 @@ select
 from reviews
 where review_score is not null 
 group by review_score
-order by review_score desc
+order by review_score desc;
 
--- 3. Review score vs Delivery Delay
+-- 31. Review score vs Delivery Delay
 
 select
 	case
@@ -505,7 +540,7 @@ where o.order_status = 'delivered'
 group by delivery_status
 order by avg_review_score desc;
 
--- 4. Review Score vs Price Range
+-- 32. Review Score vs Price Range
 select 
 	case
 		when oi.price < 50 then 'Low (< R$50)'
@@ -523,14 +558,16 @@ where o.order_status = 'delivered'
 group by price_range
 order by avg_review_score desc;
 
--- 5. Response Time (review creation vs answer date)
+-- 33. Response Time (review creation vs answer date)
 select
 	round(avg(datediff(review_answer_timestamp, review_creation_date)),2) as avg_response_days
 from reviews
 where review_answer_timestamp is not null
 	and review_creation_date is not null;
+    
 
--- 6. Review Score with/without Commnet ()
+
+-- 34. Review Score with/without Commnet ()
 select 
 	case
 		when review_comment_message = 'no_comment' then 'No Comment'
@@ -541,187 +578,3 @@ select
 from reviews 
 where review_score is not null
 group by comment_status;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
