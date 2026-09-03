@@ -81,7 +81,7 @@ where o.order_status = 'delivered'
 and o.order_purchase_timestamp is not null
 and p.payment_value is not null
 group by c.customer_unique_id
-order by frequency desc
+order by frequency desc;
 
 -- 2. New vs Repeat Customers
 select 
@@ -99,7 +99,7 @@ select
     where o.order_status = 'delivered'
     group by c.customer_unique_id
 ) sub
-group by customer_type
+group by customer_type;
 
 
 -- 3. RFM Segmentation
@@ -395,7 +395,7 @@ where o.order_status = 'delivered'
 	and pr.product_category_name is not null
 group by pr.product_category_name
 order by total_qty_sold desc
-limit 10
+limit 10;
 
 -- 2. Average Price per Category
 select
