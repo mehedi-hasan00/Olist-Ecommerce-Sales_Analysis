@@ -42,6 +42,36 @@ Raw CSVs → Clean & Merge Datasets (Pandas) → Statistical Analysis (SciPy)
    - **Review/Satisfaction Analysis** — Review scores by category, score distribution, delivery delay vs. score, price vs. score
 5. **`olist_data_analysis_visual.ipynb`** — Pulls the SQL query results back into Python and visualizes them as charts covering revenue trends, customer retention, seller Pareto curves, delivery timeliness, payment preferences, and review breakdowns.
 
+## 📊 Power BI Dashboard
+
+An interactive multi-page executive report built to track real-time operations, customer segments, and delivery performance.
+
+### Page 1: Executive Overview
+![Executive Overview Dashboard](images/dashboard_1.png)
+
+* **Key KPIs**: Total Revenue (**$16.01M**), Total Orders (**96K**), Average Order Value (**$165.97**), and Overall Review Score (**4.09**).
+* **Revenue Drivers**: Monthly sales trajectory highlighting the massive Black Friday surge in November 2017 ($1.15M+).
+* **Payment Distribution**: Clear dominance of Credit Card transactions (**78.34%**, $12.54M), followed by Boleto (**17.92%**, $2.87M).
+* **Category Breakdown**: High-value product categories driving platform volume.
+
+---
+
+### Page 2: Delivery & Satisfaction
+*(Dashboard screenshot coming soon)*
+
+<!-- 
+![Delivery & Satisfaction Dashboard](images/powerbi_dashboard_page2.png) 
+-->
+
+---
+
+### Page 3: Customer & Seller Insights
+*(Dashboard screenshot coming soon)*
+
+<!-- 
+![Customer & Seller Insights Dashboard](images/powerbi_dashboard_page3.png) 
+-->
+
 ## 🔑 Key Insights
 
 **Revenue & Growth**
