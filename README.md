@@ -71,7 +71,7 @@ Interactive BI Reporting (Power BI Dashboard)
 An interactive multi-page dashboard built to monitor platform health, unit economics, fulfillment SLAs, and cohort retention.
 
 ### Page 1: Executive Overview
-![Executive Overview Dashboard](images/powerbi_dashboard_page1.png)
+![Executive Overview Dashboard](images/dashboard_1.png)
 
 * **Core Platform KPIs**: Tracks Net Product Revenue (**$13.59M** across 96K delivered orders), Average Order Value (**$140.91**), and Platform Average Review Score (**4.09 / 5.00**).
 * **Revenue Trend Analysis**: Captures growth acceleration through 2017, highlighting the Black Friday demand surge in November 2017 ($0.99M+).
