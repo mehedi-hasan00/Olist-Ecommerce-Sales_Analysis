@@ -134,9 +134,9 @@ An interactive multi-page dashboard built to monitor platform health, unit econo
 ├── sql_file/
 │   └── olist_data_analysis.sql        # 33 production SQL queries (CTEs, Window functions)
 ├── images/
-│   ├── powerbi_dashboard_page1.png    # Executive Overview Dashboard screenshot
-│   ├── powerbi_dashboard_page2.png    # Delivery & Satisfaction Dashboard (In progress)
-│   └── powerbi_dashboard_page3.png    # Customer & Seller Insights Dashboard (In progress)
+│   ├── dashboard_1.png    # Executive Overview Dashboard screenshot
+│   ├── dashboard_2.png    # Delivery & Satisfaction Dashboard (In progress)
+│   └── dashboard_3.png    # Customer & Seller Insights Dashboard (In progress)
 └── README.md
 ```
 
