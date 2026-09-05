@@ -104,6 +104,10 @@ An interactive multi-page executive report built to track real-time operations, 
 ├── olist_data_analysis_visual.ipynb   # Pull SQL results back & visualize
 ├── sql_file/
 │   └── olist_data_analysis.sql        # 33 business analysis SQL queries
+├── images/
+│   ├── dashboard_1.png    # Executive Overview Page
+│   ├── dashboard_2.png    # Customer Segmentation Page (Add later)
+│   └── dashboard_3.png    # Logistics & Delivery Page (Add later)
 └── README.md
 ```
 
