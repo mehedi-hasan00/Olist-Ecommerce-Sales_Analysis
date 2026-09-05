@@ -1,63 +1,87 @@
-# Olist E-Commerce Data Analysis
+# Olist E-Commerce Data Analysis & Business Intelligence
 
-End-to-end data analysis of the Brazilian Olist e-commerce dataset — covering data cleaning, SQL-based business analysis, visual EDA, and statistical hypothesis testing to uncover revenue drivers, customer behavior, and the root causes of delivery-related dissatisfaction.
+An end-to-end data analytics project on the Brazilian Olist e-commerce dataset (~100K orders from Oct 2016 to Aug 2018). The workflow covers automated data cleaning, relational data warehousing in MySQL, advanced SQL business queries, inferential statistical hypothesis testing, Python visual EDA, and an interactive executive Power BI dashboard to diagnose revenue drivers, retention patterns, and delivery-related customer churn.
+
+---
 
 ## 📌 Project Overview
 
-Olist connects small Brazilian merchants to major marketplaces and manages the full order lifecycle. This project analyzes ~100K orders (Oct 2016 – Aug 2018) across orders, products, customers, sellers, payments, and reviews to answer key business questions:
+Olist operates as a marketplace integrator connecting small merchants across Brazil to large e-commerce platforms. This project uncovers structural trends across orders, products, customers, sellers, logistics, payments, and reviews to answer core business questions:
 
-- What drives revenue growth, and how seasonal is demand?
-- How healthy is customer retention, and who are the highest-value customers?
-- How concentrated is seller performance, and where are the delivery bottlenecks?
-- What actually moves customer satisfaction — price, payment method, or delivery speed?
+- **Growth & Seasonality:** What factors drive platform revenue expansion, and what is the impact of major retail events (e.g., Black Friday)?
+- **Retention & Customer Health:** What is the platform's repeat purchase rate, and what RFM segments dominate the user base?
+- **Seller Performance:** How concentrated is marketplace revenue across merchant cohorts?
+- **Delivery Bottlenecks & Satisfaction:** How strongly do delivery delays dictate review scores compared to variables like product price or freight cost?
 
-## 🛠️ Tech Stack
+---
 
-| Stage | Tools |
-|---|---|
-| Data Cleaning | Python, Pandas |
-| Data Warehousing | MySQL, SQLAlchemy |
-| Business Query Layer | SQL (CTEs, window functions) |
-| Exploratory & Visual Analysis | Python, Pandas, Matplotlib/Seaborn |
-| Statistical Testing | Python, SciPy (Chi-Square, ANOVA, T-Test, Correlation) |
+## 🛠️ Tech Stack & Architecture
 
-## 🔄 Workflow
+| Stage | Tools & Libraries | Primary Function |
+|---|---|---|
+| **Data Cleaning & Prep** | Python, Pandas, NumPy | Schema normalization, data type casting, Portuguese-to-English translation, outlier handling |
+| **Data Warehousing** | MySQL, SQLAlchemy | Relational schema modeling, foreign key constraint enforcement, database ingestion |
+| **Business Analytics Layer** | SQL (MySQL Workbench) | CTEs, window functions (`DENSE_RANK`, `NTILE`), RFM segmentation, aggregations |
+| **Statistical Testing** | Python, SciPy, Statsmodels | Two-sample t-tests, ANOVA, Chi-Square test of independence, Pearson correlation |
+| **Visual EDA** | Matplotlib, Seaborn | Exploratory data distribution analysis and trend visualization |
+| **BI Reporting** | Power BI | Multi-page interactive executive reporting and KPI monitoring |
+
+---
+
+## 🔄 End-to-End Workflow
 
 ```
-Raw CSVs → Clean & Merge Datasets (Pandas) → Statistical Analysis (SciPy)
-        → Load to MySQL (SQLAlchemy) → SQL Analysis in Workbench (CTEs/Window Fns)
-        → Pull Results Back to Python → Visual EDA → Insights
+Raw CSV Files (7 Datasets)
+│
+▼
+Data Cleaning & Feature Prep (Pandas)
+│
+├──► Statistical Hypothesis Testing (SciPy)
+│
+▼
+Data Warehousing (SQLAlchemy ➔ MySQL Database: olist_db)
+│
+▼
+Business Query Layer (MySQL Workbench: 33 Complex SQL Queries)
+│
+├──► Python-SQL Visual EDA (Seaborn / Matplotlib)
+│
+▼
+Interactive BI Reporting (Power BI Dashboard)
+
 ```
 
-1. **`Olist_data_cleaning.ipynb`** — Cleans and merges all 7 raw datasets (orders, products, customers, order items, payments, reviews, sellers): fixes data types (string → datetime), translates product categories from Portuguese to English, validates dates, fixes zip codes, checks price/logic consistency, and exports clean CSVs.
-2. **`olist_statistical_analysis.ipynb`** — Runs formal hypothesis tests on the cleaned data (Chi-Square, ANOVA, T-Test, correlation analysis) to validate business patterns before deeper SQL exploration.
-3. **`python_to_sql_connection.ipynb`** — Loads the cleaned datasets into a MySQL database (`olist_db`) via SQLAlchemy, enabling SQL analysis in MySQL Workbench.
-4. **`olist_data_analysis.sql`** — Core business analysis run in MySQL Workbench, organized into 6 sections with 33 queries total:
-   - **Revenue & Sales Trends** — Monthly revenue, AOV, revenue by category, MoM growth
-   - **Customer Analysis** — RFM (Recency, Frequency, Monetary), RFM segmentation, new vs. repeat customers, top spenders
-   - **Seller Analysis** — Top sellers by revenue, seller review performance, delivery performance, Pareto (80/20) revenue concentration
-   - **Order & Delivery Performance** — Order status breakdown, avg delivery time, late delivery %, delivery time vs. review score
-   - **Payment Analysis** — Payment type distribution, installment behavior, payment value distribution
-   - **Product Analysis** — Best-selling categories, average price by category, freight cost vs. price, top revenue products
-   - **Review/Satisfaction Analysis** — Review scores by category, score distribution, delivery delay vs. score, price vs. score
-5. **`olist_data_analysis_visual.ipynb`** — Pulls the SQL query results back into Python and visualizes them as charts covering revenue trends, customer retention, seller Pareto curves, delivery timeliness, payment preferences, and review breakdowns.
+1. **`Olist_data_cleaning.ipynb`**: Cleans and integrates all 7 datasets (`orders`, `products`, `customers`, `order_items`, `payments`, `reviews`, `sellers`). Converts timestamp strings to datetime objects, standardizes Brazilian zip codes, standardizes missing records, translates product categories to English, and exports normalized CSVs.
+2. **`olist_statistical_analysis.ipynb`**: Evaluates business hypotheses via formal statistical testing (T-tests, ANOVA, Chi-square, correlation matrices) prior to downstream query modeling.
+3. **`python_to_sql_connection.ipynb`**: Programmatically designs and ingests cleaned entities into MySQL (`olist_db`) using SQLAlchemy with configured relationship constraints.
+4. **`sql_file/olist_data_analysis.sql`**: Contains 33 business analysis queries broken into 6 modules:
+   - **Sales & Revenue Dynamics:** MoM revenue trajectories, average order value (AOV), category-level volume.
+   - **Customer RFM Segmentation:** Recency, Frequency, and Monetary categorization into actionable customer tiers.
+   - **Seller Concentration (Pareto Principle):** 80/20 revenue distribution, top seller efficiency, and fulfillment delays.
+   - **Fulfillment & Logistics:** Estimated vs. actual delivery intervals, regional transit lead times, late shipment rates.
+   - **Payment Economics:** Payment method adoption, installment distribution, order size correlation.
+   - **Customer Sentiment Analysis:** Correlation between review ratings, transit delay days, product price, and shipping fees.
+5. **`olist_data_analysis_visual.ipynb`**: Extracts aggregated SQL outputs into Pandas for visual validation using Matplotlib and Seaborn.
+6. **Power BI Dashboard**: Consolidated interactive analytical views for executive reporting and operational diagnosis.
+
+---
 
 ## 📊 Power BI Dashboard
 
-An interactive multi-page executive report built to track real-time operations, customer segments, and delivery performance.
+An interactive multi-page dashboard built to monitor platform health, unit economics, fulfillment SLAs, and cohort retention.
 
 ### Page 1: Executive Overview
-![Executive Overview Dashboard](images/dashboard_1.png)
+![Executive Overview Dashboard](images/powerbi_dashboard_page1.png)
 
-* **Key KPIs**: Total Revenue (**$16.01M**), Total Orders (**96K**), Average Order Value (**$165.97**), and Overall Review Score (**4.09**).
-* **Revenue Drivers**: Monthly sales trajectory highlighting the massive Black Friday surge in November 2017 ($1.15M+).
-* **Payment Distribution**: Clear dominance of Credit Card transactions (**78.34%**, $12.54M), followed by Boleto (**17.92%**, $2.87M).
-* **Category Breakdown**: High-value product categories driving platform volume.
+* **Core Platform KPIs**: Tracks Net Product Revenue (**$13.59M** across 96K delivered orders), Average Order Value (**$140.91**), and Platform Average Review Score (**4.09 / 5.00**).
+* **Revenue Trend Analysis**: Captures growth acceleration through 2017, highlighting the Black Friday demand surge in November 2017 ($0.99M+).
+* **Payment Method Distribution**: Highlights Credit Card dominance (**78.34%**, $12.54M), followed by Boleto (**17.92%**, $2.87M), Vouchers (**2.37%**), and Debit Cards.
+* **Category Contribution**: Identifies top product categories driving product revenue (`watches_gifts`, `sports_leisure`, `toys`).
 
 ---
 
 ### Page 2: Delivery & Satisfaction
-*(Dashboard screenshot coming soon)*
+*(Dashboard screenshot to be added)*
 
 <!-- 
 ![Delivery & Satisfaction Dashboard](images/powerbi_dashboard_page2.png) 
@@ -66,64 +90,73 @@ An interactive multi-page executive report built to track real-time operations, 
 ---
 
 ### Page 3: Customer & Seller Insights
-*(Dashboard screenshot coming soon)*
+*(Dashboard screenshot to be added)*
 
 <!-- 
 ![Customer & Seller Insights Dashboard](images/powerbi_dashboard_page3.png) 
 -->
 
-## 🔑 Key Insights
+---
 
-**Revenue & Growth**
-- Revenue grew consistently from early 2017, with a sharp spike in November 2017 driven by Black Friday and holiday demand.
+## 🔑 Key Empirical Insights
 
-**Customer Retention**
-- Over 97% of buyers are one-time customers — repeat purchase rate sits at just 2–3%, and a large share of customers fall into "Churned" or "At Risk" RFM segments, signaling a strong need for re-engagement campaigns.
+**Revenue Dynamics & Seasonality**
+- Platform product revenue totaled $13.59M across the analyzed period, showing sustained MoM growth with peak gross volume during Q4 2017 (Black Friday).
 
-**Seller Concentration**
-- Roughly 20% of sellers generate close to 80% of total platform revenue (Pareto principle), highlighting concentration risk alongside the need to grow the long tail of sellers.
+**Customer Retention & RFM Health**
+- More than 97% of transacting customers are one-time buyers; the repeat purchase rate is constrained between 2% and 3%.
+- RFM segmentation demonstrates that a substantial proportion of historical customers reside in "At Risk" or "Hibernating" cohorts, demonstrating the need for structured lifecycle re-engagement workflows.
 
-**Delivery & Satisfaction**
-- 8–10% of orders arrive later than the estimated delivery date; bulky categories (furniture, large appliances) see the longest delivery times (20–30+ days).
-- Late deliveries are the single strongest driver of poor reviews — a two-sample t-test found delayed orders average a **2.55** review score vs. **4.21** for on-time orders (p < 0.0001).
-- Price, freight cost, and product photo count show **no meaningful correlation** with review score — satisfaction is driven by delivery reliability, not price or presentation.
+**Seller Concentration (Pareto Principle)**
+- Approximately 20% of active merchants generate roughly 80% of platform sales volume, confirming heavy revenue concentration among top-tier sellers.
 
-**Payments**
-- Credit card is the dominant payment method (70%+ of transactions), with payment method significantly associated with both review score (p = 0.0002) and payment value (ANOVA, p < 0.0001) — installments correlate with higher-value orders.
-- Payment preference varies strongly by region (p ≈ 4.25 × 10⁻⁸⁰), pointing to a need for region-specific checkout and marketing strategies.
+**Logistics Reliability vs. Customer Satisfaction**
+- Between 8% and 10% of shipments exceed the estimated delivery SLA. Bulky goods (furniture, large domestic appliances) experience the highest transit variance (20–30+ days).
+- Transit delay is the primary statistical driver of low review scores: delayed deliveries register a mean review score of **2.55**, whereas on-time deliveries average **4.21** (Two-sample t-test: $p < 0.0001$).
+- Item price, shipping fee, and product image count show **no statistically significant correlation** with customer satisfaction scores. Reliability of fulfillment is the primary lever of customer sentiment.
 
-**Shipping Cost Drivers**
-- Freight cost correlates moderately-to-strongly with product weight (r = 0.61), more than with price (r = 0.41) — shipping cost is driven primarily by weight, not item value.
+**Payment Mechanics & Regional Behaviors**
+- Credit cards account for >78% of monetary volume. Payment method selection correlates significantly with order transaction value (ANOVA: $p < 0.0001$), with installment options unlocking higher basket sizes.
+- Regional payment patterns vary significantly across Brazilian states (Chi-Square: $p \approx 4.25 \times 10^{-80}$).
+
+**Freight Cost Dynamics**
+- Freight charges correlate strongly with physical product weight ($r = 0.61$), whereas item price exhibits lower correlation ($r = 0.41$), indicating shipping costs are determined by package dimensions rather than product valuation.
+
+---
 
 ## 📂 Repository Structure
 
 ```
-├── Olist_data_cleaning.ipynb          # Raw data cleaning & merging
-├── olist_statistical_analysis.ipynb   # Hypothesis testing & correlation
-├── python_to_sql_connection.ipynb     # Load clean data into MySQL
-├── olist_data_analysis_visual.ipynb   # Pull SQL results back & visualize
+├── Olist_data_cleaning.ipynb          # Raw dataset cleaning, translation & preparation
+├── olist_statistical_analysis.ipynb   # Hypothesis validation (T-Test, ANOVA, Chi-Square)
+├── python_to_sql_connection.ipynb     # Automated MySQL database creation & loading
+├── olist_data_analysis_visual.ipynb   # SQL extraction & Seaborn/Matplotlib visualization
 ├── sql_file/
-│   └── olist_data_analysis.sql        # 33 business analysis SQL queries
+│   └── olist_data_analysis.sql        # 33 production SQL queries (CTEs, Window functions)
 ├── images/
-│   ├── dashboard_1.png    # Executive Overview Page
-│   ├── dashboard_2.png    # Customer Segmentation Page (Add later)
-│   └── dashboard_3.png    # Logistics & Delivery Page (Add later)
+│   ├── powerbi_dashboard_page1.png    # Executive Overview Dashboard screenshot
+│   ├── powerbi_dashboard_page2.png    # Delivery & Satisfaction Dashboard (In progress)
+│   └── powerbi_dashboard_page3.png    # Customer & Seller Insights Dashboard (In progress)
 └── README.md
 ```
 
+---
+
 ## ▶️ How to Reproduce
 
-1. Download the [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) from Kaggle.
-2. Run `Olist_data_cleaning.ipynb` to clean and merge the raw CSVs.
-3. Run `olist_statistical_analysis.ipynb` for hypothesis testing on the cleaned data.
-4. Update the MySQL connection string in `python_to_sql_connection.ipynb` and run it to load the cleaned data into your database.
-5. Run the queries in `sql_file/olist_data_analysis.sql` in MySQL Workbench.
-6. Run `olist_data_analysis_visual.ipynb` to pull the SQL results back into Python and visualize them.
+1. **Obtain Data:** Download the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) from Kaggle into your root data directory.
+2. **Data Cleaning:** Run `Olist_data_cleaning.ipynb` to clean raw records, translate categories, and export normalized datasets.
+3. **Statistical Testing:** Run `olist_statistical_analysis.ipynb` to execute inferential tests and review correlation metrics.
+4. **Database Configuration:** Configure your MySQL connection parameters in `python_to_sql_connection.ipynb` and execute the notebook to instantiate `olist_db`.
+5. **Business SQL Queries:** Open MySQL Workbench, load `sql_file/olist_data_analysis.sql`, and execute queries across business analysis sections.
+6. **Exploratory Visuals:** Execute `olist_data_analysis_visual.ipynb` to pull database aggregations into Python charting environments.
+7. **Power BI Report:** Open the Power BI `.pbix` file, configure your MySQL or clean CSV data source credentials, and refresh visuals.
+
+---
 
 ## 👤 Author
 
 **Mehedi Hasan**
-
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/mehedi-hasan-094855388/)
 [![GitHub](https://img.shields.io/badge/GitHub-black?style=flat&logo=github)](https://github.com/mehedi-hasan00)
