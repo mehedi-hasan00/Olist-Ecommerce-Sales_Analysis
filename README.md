@@ -80,13 +80,14 @@ An interactive multi-page dashboard built to monitor platform health, unit econo
 
 ---
 
-### Page 2: Delivery & Satisfaction
-*(Dashboard screenshot to be added)*
+### Page 2: Delivery Performance & Customer Satisfaction
+![Delivery & Satisfaction Dashboard](images/dashboard_2.png)
 
-<!-- 
-![Delivery & Satisfaction Dashboard](images/powerbi_dashboard_page2.png) 
--->
-
+* **Key Fulfillment KPIs**: Average Delivery Time (**12.50 days**), Late Delivery Rate (**8.11%**), Total Negative Reviews (**11K 1-star ratings**), and an overall Satisfaction Score of **4.09 ★★★★☆**.
+* **Impact of Fulfillment on Sentiment**: On-time deliveries boast a **4.3** average score, which plummets to **2.6** when an order arrives late—confirming delivery delay as the primary operational bottleneck.
+* **Category Lead Times**: Bulky and niche categories suffer the longest transit times, led by `office_furniture` (**21 days**) and `fashion_shoes` (**16 days**).
+* **Delivery Delay vs. Review Score**: Scatter analysis illustrates a sharp negative cluster where transit days crossing the 12–14 day mark heavily concentrate review scores below 3.0.
+* **Seasonality & Transit Stress**: Monthly order volume vs. lead time shows fulfillment strain during peak months (early year and Q4 holiday ramp-up).
 ---
 
 ### Page 3: Customer & Seller Insights
