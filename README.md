@@ -90,12 +90,16 @@ An interactive multi-page dashboard built to monitor platform health, unit econo
 * **Seasonality & Transit Stress**: Monthly order volume vs. lead time shows fulfillment strain during peak months (early year and Q4 holiday ramp-up).
 ---
 
-### Page 3: Customer & Seller Insights
-*(Dashboard screenshot to be added)*
+---
 
-<!-- 
-![Customer & Seller Insights Dashboard](images/powerbi_dashboard_page3.png) 
--->
+### Page 3: Customer & Seller Insights
+![Customer & Seller Insights Dashboard](images/dashboard_3.png)
+
+* **Ecosystem Metrics**: Tracks total active scale with **93K** Total Customers, **2.97K** Active Sellers, a **3.0%** Repeat Customer Rate, and an average of **32.48** Orders per Seller.
+* **Seller Revenue Contribution**: Identifies top-performing merchants driving GMV, with `Seller-4869f` leading sales generated at **$227K**.
+* **Geographic Distribution**: Highlights heavy demand concentration in Brazil's Southeast region, led by São Paulo (`SP`) generating **$5.1M** in revenue.
+* **Customer Review Breakdown**: Details rating distribution across orders, showing **59.22%** 5-star reviews (**57K**) against **9.76%** 1-star negative feedback (**9K**).
+* **Delivery Speed Monetization**: Evaluates revenue across transit windows, showing peak revenue capture in the **6–10 Days** bucket (**$4.4M**), followed by **15+ Days** (**$3.7M**).
 
 ---
 
