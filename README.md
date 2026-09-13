@@ -88,7 +88,6 @@ An interactive multi-page dashboard built to monitor platform health, unit econo
 * **Category Lead Times**: Bulky and niche categories suffer the longest transit times, led by `office_furniture` (**21 days**) and `fashion_shoes` (**16 days**).
 * **Delivery Delay vs. Review Score**: Scatter analysis illustrates a sharp negative cluster where transit days crossing the 12–14 day mark heavily concentrate review scores below 3.0.
 * **Seasonality & Transit Stress**: Monthly order volume vs. lead time shows fulfillment strain during peak months (early year and Q4 holiday ramp-up).
----
 
 ---
 
@@ -140,8 +139,8 @@ An interactive multi-page dashboard built to monitor platform health, unit econo
 │   └── olist_data_analysis.sql        # 33 production SQL queries (CTEs, Window functions)
 ├── images/
 │   ├── dashboard_1.png    # Executive Overview Dashboard screenshot
-│   ├── dashboard_2.png    # Delivery & Satisfaction Dashboard (In progress)
-│   └── dashboard_3.png    # Customer & Seller Insights Dashboard (In progress)
+│   ├── dashboard_2.png    # Delivery & Satisfaction Dashboard
+│   └── dashboard_3.png    # Customer & Seller Insights Dashboard
 └── README.md
 ```
 
